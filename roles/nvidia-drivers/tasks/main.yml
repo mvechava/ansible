@@ -28,4 +28,4 @@
 - name: create new initramfs
   shell: dracut /boot/initramfs-$(uname -r).img $(uname -r)
 
-
+- 

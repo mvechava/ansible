@@ -1,0 +1,10 @@
+- name: Provision AzureFire after install
+  hosts: localhost
+  become: yes
+  roles:
+    - dnf
+    - grub
+#    - nvidia-drivers
+    - reboot
+    - rsync
+    - sudo

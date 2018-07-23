@@ -7,4 +7,23 @@
     name: "*"
     state: latest
 
-- 
+- name: dnf install required packages
+  dnf:
+    name: {{ item }}
+    state: installed    
+    with_items:
+      - kernel-devel
+      - kernel-headers
+      - gcc
+      - dkms
+      - acpid
+      - libglvnd-glx
+      - libglvnd-opengl
+      - libglvnd-devel
+      - pkgconfig
+      - docker
+
+- name: dnf remove xorg-x11-drv-nouveau
+  dnf:
+    name: xorg-x11-drv-nouveau
+    state: absent

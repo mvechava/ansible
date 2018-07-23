@@ -1,0 +1,8 @@
+- name: copy grub into /etc/default/
+  copy:
+    src: files/grub
+    dest: /etc/default/grub
+    mode: 0664
+
+- name: run grub2-mkconfig
+  command: grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
