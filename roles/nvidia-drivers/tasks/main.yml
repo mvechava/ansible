@@ -1,0 +1,31 @@
+---
+# file: roles/nvidia-drivers/tasks/main.yml
+
+  become: yes
+  vars:
+    driver-version: 390.67
+
+- name: download NVIDIA driver {{ driver-version }}
+  get_url:
+    url: http://us.download.nvidia.com/XFree86/Linux-x86_64/{{ driver-version }}/NVIDIA-Linux-x86_64-{{ driver-version }}.run
+    dest: /tmp/NVIDIA-driver.run
+    mode: 0775
+  tags: nvidia-drivers
+
+- debug:
+    msg: "stopping graphical target"
+
+- systemd:
+    name: graphical.target
+    state: stopped
+
+- name: blacklist nouveau in /etc/modprobe.d
+  shell: echo "blacklist nouveau" >> /etc/modprobe.d/blacklist.conf
+
+- name: backup initramfs
+  shell: mv /boot/initramfs-$(uname -r).img /boot/initramfs-$(uname -r)-nouveau.img
+
+- name: create new initramfs
+  shell: dracut /boot/initramfs-$(uname -r).img $(uname -r)
+
+

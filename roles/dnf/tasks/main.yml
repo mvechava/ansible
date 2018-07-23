@@ -1,0 +1,10 @@
+---
+# file: roles/dnf/tasks/main.yml
+
+
+- name: dnf update
+  dnf:
+    name: "*"
+    state: latest
+
+- 

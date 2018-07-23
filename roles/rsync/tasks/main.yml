@@ -1,0 +1,10 @@
+---
+# file: roles/rsync/tasks/main.yml
+
+
+- name: rsync pull /home directory from ThinkPad
+  synchronize:
+    mode: pull
+    src: rsync://thinkpad-p52s/home/mechavarria/
+    dest: /home/mechavarria/
+  tags: rsync

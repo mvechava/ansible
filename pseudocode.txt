@@ -1,0 +1,13 @@
+/etc/sudoers wheel nopasswd
+rsync -avP thinkpad-p52s:~/ /home/mechavarria/
+install latest nvidia drivers
+edit grub default && grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+ssh-keygen
+dnf update
+reboot
+dnf install kernel-devel kernel-headers gcc dkms acpid libglvnd-glx libglvnd-opengl libglvnd-devel pkgconfig docker
+echo "blacklist nouveau" >> /etc/modprobe.d/blacklist.conf
+dnf remove xorg-x11-drv-nouveau
+mv /boot/initramfs-$(uname -r).img /boot/initramfs-$(uname -r)-nouveau.img
+dracut /boot/initramfs-$(uname -r).img $(uname -r)
+

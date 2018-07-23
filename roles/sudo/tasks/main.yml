@@ -1,0 +1,18 @@
+---
+# roles/sudo/tasks/main.yml
+
+  - name: copy /etc/sudoers
+    copy: 
+      src: sudoers 
+      dest: /etc/sudoers.temp 
+      owner: root 
+      group: root 
+      mode: 0440
+    register: copy_sudoers
+    tags: sudo
+
+  - name: test /etc/sudoers
+    shell: visudo -q -c -f /etc/sudoers.temp && cp -f /etc/sudoers.temp /etc/sudoers
+    when: copy_sudoers.changed
+    tags: sudo
+
